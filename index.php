@@ -16,25 +16,25 @@ $offers=[
     ],
     [
         'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-        'category' => 'Доски и лыжи',
+        'category' => 'Крепления',
         'price' => '8000',
         'url' => 'img/lot-3.jpg'
     ],
     [
         'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-        'category' => 'Доски и лыжи',
+        'category' => 'Ботинки',
         'price' => '10999',
         'url' => 'img/lot-4.jpg'
     ],
     [
         'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-        'category' => 'Доски и лыжи',
+        'category' => 'Одежда',
         'price' => '7500',
         'url' => 'img/lot-5.jpg'
     ],
     [
         'name' => 'Маска Oakley Canopy',
-        'category' => 'Доски и лыжи',
+        'category' => 'Разное',
         'price' => '5400',
         'url' => 'img/lot-6.jpg'
     ]
@@ -42,7 +42,15 @@ $offers=[
 
 
 
-
+function format_numb($number){
+    $number = ceil($number);
+    if ($number < 1000) {
+        return $number .₽;  
+    }elseif($number >= 1000){
+        $number = number_format ( $number , 0 ,"."," " );
+        return $number .₽;
+    };
+};
 
 
 
@@ -148,7 +156,9 @@ $user_name = 'Алексей'; // укажите здесь ваше имя
         </div>
         <ul class="lots__list">
 
-            <?php foreach ($offers as $value):?>
+            <?php foreach ($offers as $value):
+                $price = rand(500,50000); // ДОБАВИЛ ДЛЯ НАГЛЯДНОСТИ
+            ?>
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="" width="350" height="260" alt="">
@@ -158,8 +168,8 @@ $user_name = 'Алексей'; // укажите здесь ваше имя
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?= $value['name'] ;?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
-                            <span class="lot__amount"><?= $value['price'] ;?></span>
-                            <span class="lot__cost">цена<b class="rub">р</b></span>
+                            <span class="lot__amount"><?= format_numb($value['price']) ;?></span>
+                            <span class="lot__cost"><?= format_numb($price) ;?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
