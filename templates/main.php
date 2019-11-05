@@ -32,8 +32,17 @@
                             <span class="lot__amount"><?= format_numb(htmlspecialchars($value['price'])); ?></span>
                             <span class="lot__cost"><?= format_numb(htmlspecialchars($price)); ?></span>
                         </div>
-                        <div class="lot__timer timer">
-                            12:23
+                        <div 
+                            <?php 
+                                $a = lifetime($value['endtime']);
+                                if ($a[0] == "00") {
+                                    echo 'class="timer--finishing"';
+                                }elseif ($a[0] !=="00") {
+                                    echo 'class="lot__timer timer"';
+                                }
+                            ?>
+                        >
+                           <?php echo $a[0] . ":" . $a[1]; ?>
                         </div>
                     </div>
                 </div>
