@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set("Europe/Moscow");
+
 require_once('templates/functions.php');
 require_once('templates/data.php');
 
@@ -16,5 +18,7 @@ $layout_content = include_template ('layout.php', [
 ]);
 
 print($layout_content);
+//$a = lifetime("2019-11-07");
+//print_r ($a);
 
 ?>
