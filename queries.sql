@@ -185,8 +185,14 @@ SELECT * FROM `category`
 	 	текущую цену, 
 	 	название категории;
  */
- SELECT `name`,`cost_start`,`picture`,`???????????price???????????`,`category_id` 
- FROM `lot`
+ SELECT l.`name`,
+	 `cost_start`,
+	 `picture`,
+	 r.`price` AS r_price,
+	 c.`name` AS c_name
+ FROM lot l
+ INNER JOIN rate r ON l.id = r.lot_id
+ INNER JOIN category c ON l.`category_id` = c.`id`
  WHERE `data_end` > current_timestamp
  ORDER BY `data_start` DESC 
 
@@ -202,18 +208,18 @@ SELECT `data_start`,
 		`cost_step`,
 		`user_id`,
 		`winner_id`,
-		`category`.`name`
-FROM `lot`
-JOIN `category`
-ON `lot`.`category_id` = `category`.`id`
-WHERE `lot`.`id` = '$a'
+		c.`name` AS с_name
+FROM lot l
+INNER JOIN category c
+ON l.`category_id` = c.`id`
+WHERE l.`id` = 1
 
 /**
  * обновить название лота по его идентификатору;
  */
 UPDATE `lot`
 SET `name` = "name2"
-WHERE `id` = '$b'
+WHERE `id` = 1
 
 /**
  * получить список ставок для лота по его идентификатору с сортировкой по дате.
@@ -224,5 +230,5 @@ WHERE `id` = '$b'
 	`user_id`,
 	`lot_id`
  FROM `rate`
- WHERE `lot_id` = '$c'
+ WHERE `lot_id` = 1
  ORDER BY `data_add`
