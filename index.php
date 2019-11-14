@@ -8,12 +8,6 @@ require_once('templates/data.php');
 $db_connect = db_connect ($db_access, $db_name);
 //define(DB, $db_connect);
 
-
-
-
-
-
-
 //Отправьте SQL-запрос для получения списка новых лотов;
 
 $new_lots = "
@@ -40,8 +34,6 @@ $category_list = " SELECT * FROM `category`;";
 
 $category_list = db_sel($db_connect,$category_list);
 
-
-
 // добавление ЦЕНЫ в массив с лотами
 foreach ($new_lots as $k => $value) {
     $m_price = '
@@ -53,7 +45,6 @@ foreach ($new_lots as $k => $value) {
 
     $m_price = mysqli_query($db_connect, $m_price);
     $m_price = mysqli_fetch_all($m_price, MYSQLI_ASSOC);
-
 
 //    echo '<pre>'; 
 //    print_r($m_price);
@@ -70,25 +61,11 @@ foreach ($new_lots as $k => $value) {
             
 }
 
-
 /*
 echo '<pre>'; 
 print_r($new_lots);
 echo '</pre>';
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Вывод шаблонов:
 
@@ -107,5 +84,21 @@ $layout_content = include_template ('layout.php', [
 print($layout_content);
 //$a = lifetime("2019-11-07");
 //print_r ($a);
+
+
+
+
+
+
+
+
+
+
+
+
+
+//test records
+
+
 
 ?>
