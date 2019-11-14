@@ -50,7 +50,7 @@ foreach ($new_lots as $k => $value) {
 //    print_r($m_price);
 //    echo '</pre>';
 
-//echo $m_price["m_price"];
+//echo "string";["m_price"];
 
 
     if ($m_price[0]["m_price"] == '') {
