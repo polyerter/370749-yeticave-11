@@ -13,6 +13,10 @@ function format_numb($number){
     }
 }
 
+
+
+
+
 /**
  * Подключение шаблонов
  */
@@ -33,6 +37,10 @@ function include_template($name,$data){
 	return $result;
 }
 
+
+
+
+
 /**
  * Время до закрытия лота ЧЧ:ММ
  */
@@ -52,4 +60,42 @@ function lifetime($endtime){
 	return $lifetime;
 }	
 
+
+
+
+
+/**
+ * Подключение к базе
+ */
+function db_connect ($db_access,$db_name){
+	$db_connect = mysqli_connect($db_access['host'],$db_access['login'],$db_access['password'],$db_name);
+	if ($db_connect == false) {
+    print("Ошибка подключения" .mysqli_connect_error());
+	} 
+	else {
+	    //print("Соединение установлено");
+	    return $db_connect;
+	}
+
+	mysqli_set_charset($con, "utf-8");
+}
+
+/**
+ * Получение записей из базы как двумерный массив
+ */
+function db_sel ($db_connect,$sql){
+	$query = mysqli_query($db_connect, $sql);
+
+	if (!$query) {
+	    $error = mysqli_error($con);
+	    print ($error);
+	}
+
+	$rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
+	return $rows;
+}
+
+
 ?>
+
+
