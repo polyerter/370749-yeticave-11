@@ -2,9 +2,11 @@
 
 date_default_timezone_set("Europe/Moscow");
 
+
 require_once('templates/functions.php');
 require_once('templates/data.php');
 $db_connect = db_connect ($db_access, $db_name);
+//define(DB, $db_connect);
 
 
 
@@ -15,13 +17,15 @@ $db_connect = db_connect ($db_access, $db_name);
 //Отправьте SQL-запрос для получения списка новых лотов;
 
 $new_lots = "
-    SELECT l.`name`,
-         `cost_start`,
-         `picture`,
-         r.`price` AS r_price,
-         c.`name` AS c_name
+    SELECT l.`id`,
+        l.`name`,
+        `cost_start`,
+        `picture`,
+        /*r.`price` AS r_price,*/
+        c.`name` AS c_name,
+        l.`data_end`
     FROM lot l
-    INNER JOIN rate r ON l.id = r.lot_id
+    /*INNER JOIN rate r ON l.id = r.lot_id*/
     INNER JOIN category c ON l.`category_id` = c.`id`
     WHERE `data_end` > current_timestamp
     ORDER BY `data_start` DESC 
@@ -37,7 +41,50 @@ $category_list = " SELECT * FROM `category`;";
 $category_list = db_sel($db_connect,$category_list);
 
 
-//print_r ($category_list);
+
+// добавление ЦЕНЫ в массив с лотами
+foreach ($new_lots as $k => $value) {
+    $m_price = '
+        SELECT MAX(price) AS m_price
+        FROM rate r
+        WHERE r.lot_id = '.$value["id"].';
+    ';
+    //$m_price = db_sel($db_connect,$m_price);
+
+    $m_price = mysqli_query($db_connect, $m_price);
+    $m_price = mysqli_fetch_all($m_price, MYSQLI_ASSOC);
+
+
+//    echo '<pre>'; 
+//    print_r($m_price);
+//    echo '</pre>';
+
+//echo $m_price["m_price"];
+
+
+    if ($m_price[0]["m_price"] == '') {
+        $new_lots[$k]['m_price'] = $value["cost_start"];
+    }else{
+        $new_lots[$k]['m_price'] = $m_price[0]["m_price"];
+    }
+            
+}
+
+
+/*
+echo '<pre>'; 
+print_r($new_lots);
+echo '</pre>';
+*/
+
+
+
+
+
+
+
+
+
 
 
 
@@ -51,7 +98,7 @@ $page_content = include_template ('main.php', [
 ]);
 
 $layout_content = include_template ('layout.php', [
-    'categorys' => $categorys,
+    'categorys' => $category_list,
     'page_content' => $page_content,
     'user_name' => $user_name,
     'title' => $title

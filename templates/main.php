@@ -31,21 +31,19 @@
                             <span class="lot__amount"><?= format_numb(htmlspecialchars($value['cost_start'])); ?></span>
                             <span class="lot__cost">
                                 
-                                <?= 
-                                /*
-                                    if (isset $value['r_price']) {
-                                        # code...
-                                    }
-
-
-                                */
-                                    format_numb(htmlspecialchars($value['r_price']));
+                                <?php
+                                    
+                                    //$m_price = db_price($db_connect, $value["id"],$value["cost_start"]);
+                                    //print_r ($m_price);
+                                    //echo format_numb(htmlspecialchars($m_price));
                                 ?>        
                             </span>
                         </div>
                         <div 
                             <?php 
-                                $a = lifetime($value['endtime']);
+                                //print_r($value);
+
+                                $a = lifetime($value['data_end']);
                                 if ($a[0] == "00") {
                                     echo 'class="timer--finishing"';
                                 }elseif ($a[0] !=="00") {

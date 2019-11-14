@@ -46,8 +46,12 @@ function include_template($name,$data){
  */
 function lifetime($endtime){
 	$now = time();
+
+	echo $endtime;
+
 	$endtime = strtotime($endtime);
 	//$lifetime = date("H:i", $lifetime);
+
 	$lifetime_hours = floor(($endtime - $now) / 3600);
 	$lifetime_minutes = floor((($endtime - $now) % 3600)/60);
 	if ($lifetime_hours < 10) {
@@ -87,14 +91,13 @@ function db_sel ($db_connect,$sql){
 	$query = mysqli_query($db_connect, $sql);
 
 	if (!$query) {
-	    $error = mysqli_error($con);
+	    $error = mysqli_error($db_connect);
 	    print ($error);
 	}
 
 	$rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 	return $rows;
 }
-
 
 ?>
 
