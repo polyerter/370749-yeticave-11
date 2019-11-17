@@ -1,3 +1,4 @@
+
 <main class="container">
     <section class="promo">
         <h2 class="promo__title">Нужен стафф для катки?</h2>
@@ -5,7 +6,7 @@
         <ul class="promo__list">
 
             <?php foreach ($categorys as $value): ?>
-            <li class=<?php echo "promo__item promo__item--" .$value['name']; ?>>
+            <li class = “promo__item promo__item--<?= $value[‘name’]; ?>“>
                 <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($value['name']); ?></a>
             </li>
             <?php endforeach; ?>
@@ -32,23 +33,24 @@
                             <span class="lot__cost">
                                 
                                 <?php
-                                    
-                                    //$m_price = db_price($db_connect, $value["id"],$value["cost_start"]);
-                                    //print_r ($m_price);
-                                    //echo format_numb(htmlspecialchars($m_price));
+                                    echo format_numb(htmlspecialchars($value['m_price']));
                                 ?>        
                             </span>
                         </div>
                         <div 
                             <?php 
-                                //print_r($value);
-
+                                
                                 $a = lifetime($value['data_end']);
+                                //echo $value['data_end'];
+                                //$a = lifetime("2019-11-18 02:11:09");
+                                //print_r($a);
+                                
                                 if ($a[0] == "00") {
                                     echo 'class="timer--finishing"';
                                 }elseif ($a[0] !=="00") {
                                     echo 'class="lot__timer timer"';
                                 }
+                                
                             ?>
                         >
                            <?php echo $a[0] . ":" . $a[1]; ?>

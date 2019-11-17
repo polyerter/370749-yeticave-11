@@ -3,26 +3,19 @@
 date_default_timezone_set("Europe/Moscow");
 
 
-require_once('templates/functions.php');
-require_once('templates/data.php');
+require_once('functions.php');
+require_once('data.php');
 $db_connect = db_connect ($db_access, $db_name);
 //define(DB, $db_connect);
 
 //Отправьте SQL-запрос для получения списка новых лотов;
 
 $new_lots = "
-    SELECT l.`id`,
-        l.`name`,
-        `cost_start`,
-        `picture`,
-        /*r.`price` AS r_price,*/
-        c.`name` AS c_name,
-        l.`data_end`
+    SELECT l.id,l.name,cost_start,picture,c.name AS c_name,l.data_end
     FROM lot l
-    /*INNER JOIN rate r ON l.id = r.lot_id*/
-    INNER JOIN category c ON l.`category_id` = c.`id`
-    WHERE `data_end` > current_timestamp
-    ORDER BY `data_start` DESC 
+    INNER JOIN category c ON l.category_id = c.id
+    WHERE data_end > current_timestamp
+    ORDER BY data_start DESC 
     LIMIT 9
 ;";
 
