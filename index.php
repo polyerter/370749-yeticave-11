@@ -17,23 +17,22 @@ $new_lots = "
     WHERE data_end > current_timestamp
     ORDER BY data_start DESC 
     LIMIT 9
-;";
+";
 
-$new_lots = db_sel($db_connect,$new_lots);
+$new_lots = db_sel($db_connect, $new_lots);
 
 //Отправьте SQL-запрос для получения списка категорий;
 
-$category_list = " SELECT * FROM `category`;";
+$category_list = " SELECT * FROM `category`";
 
-$category_list = db_sel($db_connect,$category_list);
+$category_list = db_sel($db_connect, $category_list);
 
 // добавление ЦЕНЫ в массив с лотами
 foreach ($new_lots as $k => $value) {
     $m_price = '
         SELECT MAX(price) AS m_price
         FROM rate r
-        WHERE r.lot_id = '.$value["id"].';
-    ';
+        WHERE r.lot_id = '.$value["id"].'';
     //$m_price = db_sel($db_connect,$m_price);
 
     $m_price = mysqli_query($db_connect, $m_price);
@@ -47,9 +46,9 @@ foreach ($new_lots as $k => $value) {
 
 
     if ($m_price[0]["m_price"] == '') {
-        $new_lots[$k]['m_price'] = $value["cost_start"];
+        $new_lots[$k]["m_price"] = $value["cost_start"];
     }else{
-        $new_lots[$k]['m_price'] = $m_price[0]["m_price"];
+        $new_lots[$k]["m_price"] = $m_price[0]["m_price"];
     }
             
 }
