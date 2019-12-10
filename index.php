@@ -40,5 +40,3 @@ $layout_content = include_template ('layout.php', [
     'user_name' => $user_name,
     'title' => $title
 ]);
-print($layout_content);
-?>
